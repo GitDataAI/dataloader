@@ -1,7 +1,6 @@
 
 import io
 import os
-import jiaozifs_client
 from PIL import Image
 from vision import VisionDataset
 from typing import Callable, Dict, List, Optional, Tuple, Union
