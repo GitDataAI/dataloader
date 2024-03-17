@@ -1,8 +1,9 @@
+from __future__ import absolute_import
 
 import io
 import os
 from PIL import Image
-from vision import VisionDataset
+from jz_dataloader.vision import VisionDataset
 from typing import Callable, Dict, List, Optional, Tuple, Union
 
 IMG_EXTENSIONS = (".jpg", ".jpeg", ".png", ".ppm", ".bmp",

@@ -1,11 +1,12 @@
-import os
-import jiaozifs_dataset
+from __future__ import absolute_import
+
+from jz_dataloader.jiaozifs_dataset import JiaozifsDataset
 import torch.utils.data as data
 
 from typing import Any, Callable, List, Optional, Tuple
 
 
-class VisionDataset(jiaozifs_dataset.JiaozifsDataset):
+class VisionDataset(JiaozifsDataset):
     """
     Base Class For making datasets which are compatible with torchvision.
     It is necessary to override the ``__getitem__`` and ``__len__`` method.
@@ -25,7 +26,7 @@ class VisionDataset(jiaozifs_dataset.JiaozifsDataset):
     """
 
     _repr_indent = 4
-
+    
     def __init__(
         self,
         owner: str,

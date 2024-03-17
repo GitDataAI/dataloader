@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import jiaozifs_client
 from torch.utils.data import Dataset
 from jiaozifs_client import V0Signer
