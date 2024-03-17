@@ -38,15 +38,6 @@ def is_image_file(filename: str) -> bool:
     return has_file_allowed_extension(filename, IMG_EXTENSIONS)
 
 
-def pil_loader(image_data: str) -> Image.Image:
-    # open path as file to avoid ResourceWarning
-    # (https://github.com/python-pillow/Pillow/issues/835)
-    with io.BytesIO(image_data) as f:
-        img = Image.open(f)
-        Image.open
-        return img.convert("RGB")
-
-
 def find_classes(topDirs: List[str]) -> Tuple[List[str], Dict[str, int]]:
     """Finds the class folders in a dataset.
 
@@ -95,7 +86,8 @@ class ImageDataset(VisionDataset):
             tuple: (sample, target) where target is class_index of the target class.
         """
         path, target = self.samples[index]
-        sample = self.loader(path)
+
+        sample =  Image.open(io.BytesIO(self.load_object(path))).convert("RGB") 
         if self.transform is not None:
             sample = self.transform(sample)
         if self.target_transform is not None:
@@ -139,7 +131,7 @@ class ImageDataset(VisionDataset):
 
     def make_dataset(
         self,
-        path: str,
+        base_path: str,
         class_to_idx: Optional[Dict[str, int]] = None,
         extensions: Optional[Union[str, Tuple[str, ...]]] = None,
     ) -> List[Tuple[str, int]]:
@@ -151,17 +143,11 @@ class ImageDataset(VisionDataset):
         by default.
         """
 
-        if class_to_idx is None:
-            _, class_to_idx = self.find_classes(path)
-        elif not class_to_idx:
-            raise ValueError(
-                "'class_to_index' must have at least one entry to collect any samples.")
-
         instances = []
         available_classes = set()
         for target_class in sorted(class_to_idx.keys()):
             class_index = class_to_idx[target_class]
-            target_dir = os.path.join(path, target_class)
+            target_dir = os.path.join(base_path, target_class)
             # todo check dir exit
             files = self.load_files(os.path.join(target_dir, "*"))
             for path in sorted(files):
@@ -173,6 +159,7 @@ class ImageDataset(VisionDataset):
                         available_classes.add(target_class)
 
         empty_classes = set(class_to_idx.keys()) - available_classes
+
         if empty_classes:
             msg = f"Found no valid file for the classes {
                 ', '.join(sorted(empty_classes))}. "

@@ -35,7 +35,12 @@ class JiaozifsDataset(Dataset):
         return jiaozifs_client.ObjectsApi(self.apiClient).get_files(
             self.owner, self.repo, self.refName, self.type, pattern=pattern
         )
-
+    
+    def load_object(self, path: str):
+        return jiaozifs_client.ObjectsApi(self.apiClient).get_object(
+              self.owner, self.repo, self.refName, path, self.type, _preload_content = False
+        ).read()
+    
     def load_sub_dirs(self, path: str):
         entries: List[FullTreeEntry] = jiaozifs_client.CommitApi(
             self.apiClient
