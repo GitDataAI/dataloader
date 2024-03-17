@@ -72,8 +72,7 @@ class VisionDataset(JiaozifsDataset):
     def __repr__(self) -> str:
         head = "Dataset " + self.__class__.__name__
         body = [f"Number of datapoints: {self.__len__()}"]
-        body.append(f"Data location: {self.url} {
-                    self.owner}/{self.repo}/{self.refName}/{self.type}/{self.pattern}")
+        body.append(f"Data location: {self.url} {self.owner}/{self.repo}/{self.refName}/{self.type}/{self.pattern}")
         body += self.extra_repr().splitlines()
         if hasattr(self, "transforms") and self.transforms is not None:
             body += [repr(self.transforms)]
