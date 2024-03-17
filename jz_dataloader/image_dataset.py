@@ -161,11 +161,9 @@ class ImageDataset(VisionDataset):
         empty_classes = set(class_to_idx.keys()) - available_classes
 
         if empty_classes:
-            msg = f"Found no valid file for the classes {
-                ', '.join(sorted(empty_classes))}. "
+            msg = f"Found no valid file for the classes {', '.join(sorted(empty_classes))}. "
             if extensions is not None:
-                msg += f"Supported extensions are: {extensions if isinstance(
-                    extensions, str) else ', '.join(extensions)}"
+                msg += f"Supported extensions are: {extensions if isinstance(extensions, str) else ', '.join(extensions)}"
             raise FileNotFoundError(msg)
 
         return instances
