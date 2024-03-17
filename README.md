@@ -7,5 +7,11 @@ implemete data loader for pytorch
 
 install
 ```bash
-pip install  git+https://github.com/GitDataAI/dataloader.git    
+pip install  git+https://github.com/GitDataAI/jz_dataloader.git    
+```
+
+## example
+
+```py
+
 ```
